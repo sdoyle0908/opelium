@@ -65,14 +65,16 @@ function getCurrentWeather() {
         const year = date.getFullYear();
 
         var weatherIcon = data.current.weather[0].icon;
-        var iconUrl = "http://openweathermap.org/img/w/${weatherIcon}.png";
+        var iconUrl = `http://openweathermap.org/img/w/${weatherIcon}.png`;
 
         //produce items
+        $("h3").text("");
+        $("#header-icon").attr("src", iconUrl);
         $("h3").append(`${city} (${month}/${day}/${year})`);
         temp.text(`Temp: ${Math.floor(data.current.temp)}°F`);
         wind.text(`Wind Speed: ${Math.floor(data.current.wind_speed)} MPH`);
-        humidity.text(`Humidity: ${Math.floor(data.current.humidity)}`);
-        uvIn.text(`UV Index: ${Math.floor(data.current.uvi)}`);
+        humidity.text(`Humidity: ${Math.floor(data.current.humidity)}%`);
+        uvIn.text(`UV Index: ${data.current.uvi}`);
       });
   }
 }
