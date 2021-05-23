@@ -53,8 +53,22 @@ function getCurrentWeather() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        console.log(data.current.dt);
 
-        $("h3").append(`${city}`);
+        //convert date from api
+        var currentDate = data.current.dt;
+        $("#current-city").text().split(" ")[(0, 1, 2, 3, 4)];
+        var date = new Date(currentDate * 1000);
+        console.log(date);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        var weatherIcon = data.current.weather[0].icon;
+        var iconUrl = "http://openweathermap.org/img/w/${weatherIcon}.png";
+
+        //produce items
+        $("h3").append(`${city} (${month}/${day}/${year})`);
         temp.text(`Temp: ${Math.floor(data.current.temp)}°F`);
         wind.text(`Wind Speed: ${Math.floor(data.current.wind_speed)} MPH`);
         humidity.text(`Humidity: ${Math.floor(data.current.humidity)}`);
