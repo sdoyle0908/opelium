@@ -34,7 +34,6 @@ function addList() {
 //function to display current weather
 function getCurrentWeather() {
   fetch(queryUrl)
-    //arrow is another way to write function
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -72,9 +71,29 @@ function getCurrentWeather() {
         $("#header-icon").attr("src", iconUrl);
         $("h3").append(`${city} (${month}/${day}/${year})`);
         temp.text(`Temp: ${Math.floor(data.current.temp)}°F`);
-        wind.text(`Wind Speed: ${Math.floor(data.current.wind_speed)} MPH`);
+        wind.text(`Wind Speed: ${data.current.wind_speed} MPH`);
         humidity.text(`Humidity: ${Math.floor(data.current.humidity)}%`);
         uvIn.text(`UV Index: ${data.current.uvi}`);
+
+        uvIndex(data);
       });
+  }
+}
+
+function uvIndex(data) {
+  uvIn.addClass("badge");
+
+  if (data.current.uvi < 3) {
+    uvIn.removeClass("bg-warning bg-danger");
+    uvIn.addClass("bg-success");
+  } else if (data.current.uvi >= 3 && data.current.uvi < 6) {
+    uvIn.removeClass("bg-success bg-danger");
+    uvIn.addClass("bg-warning");
+  } else if (data.current.uvi >= 6 && data.current.uvi < 8) {
+    uvIn.removeClass("bg-warning bg-success");
+    uvIn.addClass("bg-danger");
+  } else {
+    uvIn.removeClass("bg-warning bg-success");
+    uvIn.addClass("bg-danger");
   }
 }
